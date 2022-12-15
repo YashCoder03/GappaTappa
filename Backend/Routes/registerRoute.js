@@ -5,4 +5,4 @@ const routes = express.Router();
 
 routes.post('/',register.reg);
 routes.get('/',register.check);
-module.exports = {routes};
+module.exports = routes;

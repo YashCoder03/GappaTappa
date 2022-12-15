@@ -1,29 +1,34 @@
 const register = require("../model/addUser");
-const model = require("../model/addUser");
-const check = require("../model/checkUser");
-module.exports = {
+const check1 = require("../model/checkUser");
 
-    reg : async(req,res) =>
+
+    const reg = async(req,res) =>
     {
         try{
-            const {phone,userID,name} = req.body;
-            const  register = new register({
-                name : name,
+            const {phone,userID,userName} = req.body;
+            const  registeruser = new register({
+                userName : userName,
                 userID : userID,
-                phone : phone 
+                phone : phone
             });
-            await register.save();
+            console.log(phone,userID,userName);
+            await registeruser.save(function(err,result){
+                if(err)
+                {
+                    console.log(err);
+                }
+            });
             res.status(201).json({});
         }
         catch(error)
         {
-            res.status(500).send({error : "Server Time-out"});
+            res.status(500).send({error : "server-timeout"});
         }
-    },
-    check : async(req,res) =>{
+    }
+    const check = async(req,res) =>{
         try {
             const userID = req.body;
-            if(check.isExist(userID))
+            if(check1.isExist(userID))
             {
                 res.status(200).json({status : "User Found"});
             }
@@ -39,4 +44,4 @@ module.exports = {
         }
     }
 
-}
+    module.exports = {reg,check}
